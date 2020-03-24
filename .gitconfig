@@ -1,0 +1,5 @@
+[user]
+  name = Ruslan Khusnulin
+  email = khusnulin@outlook.com
+[core]
+  editor = notepad++ -multiInst -nosession
