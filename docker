@@ -1,0 +1,13 @@
+# Linux
+docker versio
+docker image ls
+docker run --rm -it microsoft/dotnet:2-runtime dotnet
+
+
+#Windows
+git clone https://github.com/khusnulin
+docker run --rm -v ${PWD}:C:\API microsoft/aspdotnet:2-runtime
+docker inspect
+docker ps
+
+dotnet \api\...\api.dll
