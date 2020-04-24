@@ -18,6 +18,6 @@ dotnet \api\...\api.dll
 docker run --rm -it microsoft/dotnet:2-runtime
 
 docker run --rm -it -v ${PWD}:C:\API -p 8080:80 microsoft/aspnetcore:2
-docker run --rm -it -v ${PWD}:\API -p 8080:80 microsoft/aspnetcore:2
+docker run --rm -it -v ${PWD}:/API -p 8080:80 microsoft/aspnetcore:2
 
 
