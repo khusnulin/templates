@@ -20,3 +20,19 @@ Restart-Service MSExchangePOP3; Restart-Service MSExchangePOP3BE
 
 # Get list user with MFA = 0
 Get-MsolUser -All | Where-Object {$_.StrongAuthenticationMethods.Count -eq 0} | Select-Object -Property UserPrincipalName | Out-File C:\filename.txt
+
+Reset-MsolStrongAuthenticationMethodByUpn -UserPrincipalName sunil@mydomain.com
+Revoke-AzureADUserAllRefreshToken -ObjectId "xxxxx-xxxx-xxxxxx"
+Revoke-AzureADSignedInUserAllRefreshToken
+
+
+
+
+### Get the group objectid
+
+Get-MsolGroup [groupname] | fl ObjectId
+
+### Next, export the users of the group to a csv
+Get-MsolGroupMember -GroupObjectId xxxxx-xxxxx-xxxxx-xxxxx | Select-Object EmailAddress | Export-Csv -Path c:\temp\users.csv
+### Import the csv and revoke th refresh token for these users.
+Import-CSV “c:\temp\users.csv” | % {Get-AzureADUser -SearchString $_.emailaddress | Revoke-AzureADUserAllRefreshToken}
