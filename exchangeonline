@@ -1,0 +1,14 @@
+Set-ExecutionPolicy RemoteSigned
+Install-Module -Name ExchangeOnlineManagement
+Import-Module ExchangeOnlineManagement; Get-Module ExchangeOnlineManagement
+
+Update-Module -Name ExchangeOnlineManagement
+
+### Exchange Online - Accounts with MFA enabled
+Connect-ExchangeOnline -UserPrincipalName <UPN> -ShowProgress $true
+
+Get-EXOMailbox -PropertySets Archive,Custom
+Get-EXOMailbox -Properties LitigationHoldEnabled,AuditEnabled
+
+
+Set-OrganizationConfig -OAuth2ClientProfileEnabled $true
