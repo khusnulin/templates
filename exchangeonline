@@ -12,3 +12,7 @@ Get-EXOMailbox -Properties LitigationHoldEnabled,AuditEnabled
 
 
 Set-OrganizationConfig -OAuth2ClientProfileEnabled $true
+
+Get-User -Filter "RecipientType -eq 'UserMailbox' -and Department -like 'Engineering*' -and StateOrProvince -eq 'WA'" | Set-CasMailbox -PopEnabled $false -ImapEnabled $false
+### Restart Pop3
+Restart-Service MSExchangePOP3; Restart-Service MSExchangePOP3BE
