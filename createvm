@@ -11,6 +11,7 @@ Set-AzContext -SubscriptionId "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 
 # Set subscription by Name
 Set-AzContext -SubscriptionName "Company Subscription"
+az account set --subscription "Azure Pass - Sponsorship"
 
 # Create resource group
 
