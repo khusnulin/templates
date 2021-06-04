@@ -1,0 +1,6 @@
+$PSVersionTable.PSVersion
+
+Get-Module -Name AzureRM -ListAvailable
+Get-Module -Name Az -ListAvailable
+
+Install-Module -Name Az -AllowClobber -Force
