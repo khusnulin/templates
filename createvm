@@ -1,0 +1,113 @@
+# Run Azure Cloud Shell https://shell.azure.com/powershell
+
+# Info
+Get-AzContext
+
+# List Subscriptions
+Get-AzSubscription
+
+# Set subscription by Id
+Set-AzContext -SubscriptionId "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+
+# Set subscription by Name
+Set-AzContext -SubscriptionName "Company Subscription"
+
+# Create resource group
+
+New-AzResourceGroup `
+   -ResourceGroupName "myResourceGroupVM" `
+   -Location "EastUS"
+
+# Create admin for VM
+
+$cred = Get-Credential
+
+# Create Windows VM
+New-AzVm `
+    -ResourceGroupName "myResourceGroupVM" `
+    -Name "myVM" `
+    -Location "EastUS" `
+    -VirtualNetworkName "myVnet" `
+    -SubnetName "mySubnet" `
+    -SecurityGroupName "myNetworkSecurityGroup" `
+    -PublicIpAddressName "myPublicIpAddress" `
+    -Credential $cred
+    
+# Connect to VM
+Get-AzPublicIpAddress `
+   -ResourceGroupName "myResourceGroupVM"  | Select IpAddress
+   
+# Find VM Images
+Get-AzVMSize -Location "EastUS"
+
+# Resize VM
+
+$vm = Get-AzVM `
+   -ResourceGroupName "myResourceGroupVM"  `
+   -VMName "myVM"
+$vm.HardwareProfile.VmSize = "Standard_B2ms"
+Update-AzVM `
+   -VM $vm `
+   -ResourceGroupName "myResourceGroupVM"
+
+# PowerShell Windows
+Install-WindowsFeature -name Web-Server -IncludeManagementTools
+
+# Stop VM
+Stop-AzVM `
+   -ResourceGroupName "myResourceGroupVM" `
+   -Name "myVM" -Force
+
+# Start VM
+Start-AzVM `
+   -ResourceGroupName "myResourceGroupVM" `
+   -Name "myVM"
+   
+# Delete resource group
+
+Remove-AzResourceGroup `
+   -Name "myResourceGroupVM" `
+   -Force
+
+# Create with AZ CLI
+az group create --name myResourceGroup --location eastus
+
+az vm create --resource-group myResourceGroup --name myVM --image win2016datacenter --admin-username azureuser --admin-password Pa55w0rd)1#s
+
+# Open ports
+az vm open-port --port 80 --resource-group myResourceGroup --name myVM
+
+# Connect to VM
+mstsc /v:publicIpAddress
+mstsc /v:104.45.138.152
+
+# Clean resource Group
+az group delete --name myResourceGroup -y
+az group delete --name NetworkWatcherRG -y
+
+
+# Create Linux VM
+az group create --name myResourceGroup --location eastus
+
+az vm create `
+  --resource-group myResourceGroup `
+  --name myVM `
+  --image UbuntuLTS `
+  --admin-username azureuser `
+  --generate-ssh-keys
+
+
+az vm open-port --port 80 --resource-group myResourceGroup --name myVM
+
+# Connect to VM
+ssh azureuser@40.68.254.142
+
+# Install web server
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Exit
+exit
+
+az group delete --name myResourceGroup
+
