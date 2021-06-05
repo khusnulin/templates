@@ -1,0 +1,17 @@
+az account set --subscription "Azure Pass - Sponsorship"
+
+# Install in Windows PowerShell
+az aks install-cli
+
+az login
+az aks get-credentials --resource-group in2021 --name kubclusters
+
+az aks browse --resource-group in2021 --name kubclusters
+
+kubectl get nodes
+
+kubectl get service
+
+kubectl apply -f azure-vote.yaml
+# code azure.yaml
+
