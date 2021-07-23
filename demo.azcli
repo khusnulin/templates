@@ -1,0 +1,8 @@
+# Create resource group
+az group create --name tryout-group --location westeurope
+az configure --defaults group=tryout-group
+
+# Create web app
+az appservice plan create --name tryout-plan
+az webapp create --name tryuot-web --plan tryout-plan
+az webapp show --name tryout-web --query state
