@@ -6,3 +6,4 @@ az configure --defaults group=tryout-group
 az appservice plan create --name tryout-plan
 az webapp create --name tryuot-web --plan tryout-plan
 az webapp show --name tryout-web --query state
+
