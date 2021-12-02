@@ -25,7 +25,7 @@ Import-Csv -Path "C:\Downloads\users.csv" | foreach {New-MsolUser -DisplayName $
 
 Get-MsolUser -SearchString "User"| Set-MsolUserLicense -AddLicenses "reseller-account:TEAMS_EXPLORATORY"
 
-// файлик users.csv
+// файлик users.csv - если создаем в Excel то сохраняем в CSV UTF-8 - от это зависит будут ли ??? ????? в названиях пользователей 
 
 UserPrincipalName,FirstName,LastName,DisplayName,UsageLocation,AccountSkuId,Password
 User1@xxx.onmicrosoft.com,Name1,Surname1,User1,RU,reseller-account:O365_BUSINESS_PREMIUM,MicrosoftGreatCompany12345
