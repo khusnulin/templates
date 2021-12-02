@@ -1,0 +1,33 @@
+// Если впервые запускаете PowerShell, то необходимо проверить установлен ли модуль
+
+Get-Module -ListAvailable -Name MSOnline*
+
+// Если не установлен - устанавливаем
+Install-Module AzureAD
+Install-Module AzureADPreview
+Install-Module MSOnline
+
+Import-Module MSOnline 
+
+// входим в Microsoft365 через PowerShell
+
+Connect-MsolService
+
+// Смотрим кол-во лицензий и запоминаем AccountSkuId - он понадобится в файлике .csv
+
+Get-MsolAccountSku
+
+// Загружаем пользователей
+
+Import-Csv -Path "C:\Downloads\users.csv" | foreach {New-MsolUser -DisplayName $_.DisplayName -FirstName $_.FirstName -LastName $_.LastName -UserPrincipalName $_.UserPrincipalName -UsageLocation $_.UsageLocation -LicenseAssignment $_.AccountSkuId -Password $_.Password} | Export-Csv -Path "C:\Downloads\UsersResults.csv"
+
+// Наделение лицензиями по названию пользователей
+
+Get-MsolUser -SearchString "User"| Set-MsolUserLicense -AddLicenses "reseller-account:TEAMS_EXPLORATORY"
+
+// файлик users.csv
+
+UserPrincipalName,FirstName,LastName,DisplayName,UsageLocation,AccountSkuId,Password
+User1@xxx.onmicrosoft.com,Name1,Surname1,User1,RU,reseller-account:O365_BUSINESS_PREMIUM,MicrosoftGreatCompany12345
+User2@xxx.onmicrosoft.com,Name2,Surname2,User2,RU,reseller-account:O365_BUSINESS_PREMIUM,MicrosoftGreatCompany12345
+User3@xxx.onmicrosoft.com,Name3,Surname3,User3,RU,reseller-account:O365_BUSINESS_PREMIUM,MicrosoftGreatCompany12345
