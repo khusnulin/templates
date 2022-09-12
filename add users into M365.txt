@@ -48,3 +48,9 @@ $Users = Import-Csv users.csv
 Foreach($User in $Users){
     Get-MSOLUser -UserPrincipalName $User.UPN | Remove-MsolUser -Force
 }
+// Формат файлика users.csv для удаления ользователей с помощью CSV файлика (см.предыдущий комментарий)
+
+UPN
+User1@xxx.onmicrosoft.com
+User2@xxx.onmicrosoft.com
+User3@xxx.onmicrosoft.com
