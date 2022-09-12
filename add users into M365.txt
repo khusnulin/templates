@@ -31,3 +31,20 @@ UserPrincipalName,FirstName,LastName,DisplayName,UsageLocation,AccountSkuId,Pass
 User1@xxx.onmicrosoft.com,Name1,Surname1,User1,RU,reseller-account:O365_BUSINESS_PREMIUM,MicrosoftGreatCompany12345
 User2@xxx.onmicrosoft.com,Name2,Surname2,User2,RU,reseller-account:O365_BUSINESS_PREMIUM,MicrosoftGreatCompany12345
 User3@xxx.onmicrosoft.com,Name3,Surname3,User3,RU,reseller-account:O365_BUSINESS_PREMIUM,MicrosoftGreatCompany12345
+
+// Удаление пользователей
+Remove-MsolUser -UserPrincipalName User1@xxx.onmicrosoft.com
+
+// Восстановление удаленных пользователей
+Restore-MsolUser -UserPrincipalName User1@xxx.onmicrosoft.com
+
+// Удаление пользователей из корзины
+Get-MsolUser -ReturnDeletedUsers
+Remove-MsolUser -UserPrincipalName User1@xxx.onmicrosoft.com -RemoveFromRecycleBin
+Get-MsolUser -ReturnDeletedUsers | Remove-MsolUser -RemoveFromRecycleBin -Force
+
+// Удаление пользователей с помощью CSV файла
+$Users = Import-Csv users.csv
+Foreach($User in $Users){
+    Get-MSOLUser -UserPrincipalName $User.UPN | Remove-MsolUser -Force
+}
